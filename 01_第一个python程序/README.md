@@ -14,6 +14,8 @@
 
 	直接运行.py文件相当于启动了Python解释器，然后一次性把.py文件的源代码给执行了，你是没有机会以交互的方式输入源代码的。
 
+* python 代码运行助手
+	
+	Python代码运行助手可以让你在线输入Python代码，然后通过本机运行的一个Python脚本来执行代码。
 
-
-
+	[python代码运行助手源码](https://github.com/MrQuJL/point-at-offer/blob/master/数组/二维数组中的查找.java "二维数组中的查找")
