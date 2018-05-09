@@ -80,6 +80,54 @@
 
 * Python的浮点数也没有大小限制，但是超出一定范围就直接表示为inf（无限大）。
 
+## python字符编码
+
+* 在最新的Python 3版本中，字符串是以Unicode编码的，也就是说，Python的字符串支持多语言
+
+* 对于单个字符的编码，Python提供了ord()函数获取字符的整数表示，chr()函数把编码转换为对应的字符
+
+* 由于Python的字符串类型是str，在内存中以Unicode表示，一个字符对应若干个字节。如果要在网络上传输，或者保存到磁盘上，就需要把str变为以字节为单位的bytes
+
+* 以Unicode表示的str通过encode()方法可以编码为指定的bytes
+
+* 'ABC'.encode('ascii')
+
+* 'ABC'.encode('utf-8')
+
+* 'ABC'.encode('UTF8')
+
+* 反过来，如果我们从网络或磁盘上读取了字节流，那么读到的数据就是bytes。要把bytes变为str，就需要用decode()方法
+
+* 如果bytes中只有一小部分无效的字节，可以传入errors='ignore'忽略错误的字节：
+
+	```
+		 b'\xe4\xb8\xad\xff'.decode('utf-8', errors='ignore')
+	```
+
+* 要计算str包含多少个字符，可以用len()函数
+
+	```
+		len('ABC')
+		len('中文')
+	```
+
+* len()函数计算的是str的字符数，如果换成bytes，len()函数就计算字节数
+
+	```
+		len(b'ABC')
+		len(b'\xe4\xb8\xad\xe6\x96\x87')
+		len('中文'.encode('utf-8'))
+	```
+
+* 由于Python源代码也是一个文本文件，所以，当你的源代码中包含中文的时候，在保存源代码时，就需要务必指定保存为UTF-8编码。当Python解释器读取源代码时，为了让它按UTF-8编码读取，我们通常在文件开头写上这两行
+	
+	```
+		#!/usr/bin/env python3
+		# -*- coding: utf-8 -*-
+	```
+
+
+
 
 
 
