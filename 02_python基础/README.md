@@ -261,3 +261,72 @@
 		0
 	```
 
+## tuple
+
+* 另一种有序列表叫元组：tuple。tuple和list非常类似，但是tuple一旦初始化就不能修改，比如同样是列出同学的名字：
+
+	```
+		>>> classmates = ('Michael', 'Bob', 'Tracy')
+	```
+
+* 现在，classmates这个tuple不能变了，它也没有append()，insert()这样的方法。其他获取元素的方法和list是一样的，你可以正常地使用classmates[0]，classmates[-1]，但不能赋值成另外的元素。
+
+* 不可变的tuple有什么意义？因为tuple不可变，所以代码更安全。如果可能，能用tuple代替list就尽量用tuple
+
+* 一个元素的tuple为了避免引起歧义，需这样表示：
+
+	```
+		>>> t = (1,)
+		>>> t
+		(1,)
+	```
+
+* Python在显示只有1个元素的tuple时，也会加一个逗号,，以免你误解成数学计算意义上的括号。
+
+* 注意tuple的不可变其实是指向的不可变，指向的如果是一个引用的话，那个引用所指向的内容是可变的。
+
+## 条件判断
+
+* 比如，输入用户年龄，根据年龄打印不同的内容，在Python程序中，用if语句实现：
+
+	```
+		age = 3
+		if age >= 18:
+			print('adult')
+		elif age >= 6:
+		  print('teenager')
+		else:
+		  print('kid')
+	```
+注意：是 ```elif```，python通过缩进来确定if下面需要执行多少条语句，所以如果需要写多条语句只需要通过缩进就可以了，例如：
+
+	```
+		age = 3
+		if age >= 18:
+			print('your age is', age)
+			print('adult')
+		else:
+			print('your age is', age)
+			print('teenager')
+	```
+
+* 注意：input返回的数据类型是str，需要使用int函数来转换成整数，例如：
+
+	```
+		s = input('birth: ')
+		birth = int(s)
+		if birth < 2000:
+		    print('00前')
+		else:
+			print('00后')
+	```
+
+
+
+
+
+
+
+
+
+
