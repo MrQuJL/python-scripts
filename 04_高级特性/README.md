@@ -211,8 +211,78 @@
 		['hello', 'world', 'ibm', 'apple']
 	```
 
-
 ## 生成器
+
+* 通过列表生成式，我们可以直接创建一个列表。但是，受到内存限制，列表容量肯定是有限的。而且，创建一个包含100万个元素的列表，不仅占用很大的存储空间，如果我们仅仅需要访问前面几个元素，那后面绝大多数元素占用的空间都白白浪费了。
+
+* 所以，如果列表元素可以按照某种算法推算出来，那我们是否可以在循环的过程中不断推算出后续的元素呢？这样就不必创建完整的list，从而节省大量的空间。在Python中，这种一边循环一边计算的机制，称为生成器：generator。
+
+	```
+		>>> L = [x * x for x in range(10)]
+		>>> L
+		[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+		>>> g = (x * x for x in range(10))
+		>>> g
+		<generator object <genexpr> at 0x1022ef630>
+	```
+
+* 创建L和g的区别仅在于最外层的[]和()，L是一个list，而g是一个generator。
+
+* 对generator的跌打是通过for循环或者next函数来取下一个元素的
+
+* 斐波拉契数列用列表生成式写不出来，但是，用函数把它打印出来却很容易：
+
+	```
+		def fib(max):
+			n, a, b = 0, 0, 1
+			while n < max:
+				print(b)
+				a, b = b, a + b
+				n = n + 1
+			return 'done'
+	```
+
+* 注意赋值语句：
+
+	```
+		a, b = b, a + b
+	```
+
+* 相当于:
+
+	```
+		t = (b, a + b) # t是一个tuple
+		a = t[0]
+		b = t[1]
+	```
+
+* 要把fib函数变成generator，只需要把print(b)改为yield b就可以了：
+
+	```
+		def fib(max):
+			n, a, b = 0, 0, 1
+			while n < max:
+				yield b
+				a, b = b, a + b
+				n = n + 1
+			return 'done'
+	```
+
+* 这就是定义generator的另一种方法。如果一个函数定义中包含yield关键字，那么这个函数就不再是一个普通函数，而是一个generator：
+
+	```
+		>>> f = fib(6)
+		>>> f
+		<generator object fib at 0x104feaaa0>
+	```
+
+* 这里，最难理解的就是generator和函数的执行流程不一样。函数是顺序执行，遇到return语句或者最后一行函数语句就返回。而变成generator的函数，在每次调用next()的时候执行，遇到yield语句返回，再次执行时从上次返回的yield语句处继续执行。
+
+
+
+
+
+
 
 
 ## 迭代器
