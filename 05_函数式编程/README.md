@@ -17,8 +17,6 @@ Python对函数式编程提供部分支持。由于Python允许使用变量，�
 		print(add(-5, 6, abs))
 	```
 
-## map/reduce
-
 ### map
 
 * 我们先看map。map()函数接收两个参数，一个是函数，一个是Iterable，map将传入的函数依次作用到序列的每个元素，并把结果作为新的Iterator返回。
@@ -65,7 +63,7 @@ Python对函数式编程提供部分支持。由于Python允许使用变量，�
 		25
 	```
 
-# filter
+### filter
 
 * 和map()类似，filter()也接收一个函数和一个序列。和map()不同的是，filter()把传入的函数依次作用于每个元素，然后根据返回值是True还是False决定保留还是丢弃该元素。
 
@@ -90,6 +88,53 @@ Python对函数式编程提供部分支持。由于Python允许使用变量，�
 	```
 
 * 注意到filter()函数返回的是一个Iterator，也就是一个惰性序列，所以要强迫filter()完成计算结果，需要用list()函数获得所有结果并返回list。
+
+### sorted
+
+* Python内置的sorted()函数就可以对list进行排序：
+
+	```
+		>>> sorted([36, 5, -12, 9, -21])
+		[-21, -12, 5, 9, 36]
+	```
+
+* 此外，sorted()函数也是一个高阶函数，它还可以接收一个key函数来实现自定义的排序，例如按绝对值大小排序：
+
+	```
+		>>> sorted([36, 5, -12, 9, -21], key=abs)
+		[5, 9, -12, -21, 36]
+	```
+
+* sorted也可以对字符串进行排序
+
+	```
+		>>> sorted(['bob', 'about', 'Zoo', 'Credit'])
+		['Credit', 'Zoo', 'about', 'bob']
+	```
+
+* 我们给sorted传入key函数，即可实现忽略大小写的排序：
+
+	```
+		>>> sorted(['bob', 'about', 'Zoo', 'Credit'], key=str.lower)
+		['about', 'bob', 'Credit', 'Zoo']
+	```
+
+* 要进行反向排序，不必改动key函数，可以传入第三个参数reverse=True：
+
+	```
+		>>> sorted(['bob', 'about', 'Zoo', 'Credit'], key=str.lower, reverse=True)
+		['Zoo', 'Credit', 'bob', 'about']
+	```
+
+* 从上述例子可以看出，高阶函数的抽象能力是非常强大的，而且，核心代码可以保持得非常简洁。
+
+## 返回函数
+
+## 匿名函数
+
+## 装饰器
+
+## 偏函数
 
 
 
