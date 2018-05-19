@@ -180,11 +180,90 @@
 		'Bart Simpson'
 	```
 
-
 ## 继承和多态
 
+* 我们已经编写了一个名为Animal的class，有一个run()方法可以直接打印：
 
+	```
+		class Animal(object):
+			def run(self):
+				print('Animal is running...')
+	```
 
+* 当我们需要编写Dog和Cat类时，就可以直接从Animal类继承：
+
+	```
+		class Dog(Animal):
+			pass
+
+		class Cat(Animal):
+			pass
+	```
+
+* 继承有什么好处？最大的好处是子类获得了父类的全部功能。由于Animial实现了run()方法，因此，Dog和Cat作为它的子类，什么事也没干，就自动拥有了run()方法：
+
+	```
+		dog = Dog()
+		dog.run()
+
+		cat = Cat()
+		cat.run()
+	```
+
+* 运行结果如下：
+
+	```
+		Animal is running...
+		Animal is running...
+	```
+
+* 也可以对run方法进行重写:
+
+	```
+		class Dog(Animal):
+
+			def run(self):
+				print('Dog is running...')
+
+		class Cat(Animal):
+
+			def run(self):
+				print('Cat is running...')
+	```
+
+* 当子类和父类都存在相同的run()方法时，我们说，子类的run()覆盖了父类的run()，在代码运行的时候，总是会调用子类的run()。这样，我们就获得了继承的另一个好处：多态。
+
+* 判断一个变量是否是某个类型可以用isinstance()判断：
+
+	```
+		>>> isinstance(a, list)
+		True
+		>>> isinstance(b, Animal)
+		True
+		>>> isinstance(c, Dog)
+		True
+	```
+
+* 但是等等，试试：
+
+	```
+		>>> isinstance(c, Animal)
+		True
+	```
+
+* 看来c不仅仅是Dog，c还是Animal！
+
+* 对于Python这样的动态语言来说，则不一定需要传入Animal类型。我们只需要保证传入的对象有一个run()方法就可以了：
+
+	```
+		class Timer(object):
+			def run(self):
+				print('Start...')
+	```
+
+* 这就是动态语言的“鸭子类型”，它并不要求严格的继承体系，一个对象只要“看起来像鸭子，走起路来像鸭子”，那它就可以被看做是鸭子。
+
+* 动态语言的鸭子类型特点决定了继承不像静态语言那样是必须的。
 
 ## 获取对象信息
 
