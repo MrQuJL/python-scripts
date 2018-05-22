@@ -472,8 +472,84 @@
 
 ## 使用枚举类
 
+* 当我们需要定义常量时，一个办法是用大写变量通过整数来定义，例如月份：
 
+	```
+		JAN = 1
+		FEB = 2
+		MAR = 3
+		...
+		NOV = 11
+		DEC = 12
+	```
+
+* 好处是简单，缺点是类型是int，并且仍然是变量。
+
+* 更好的方法是为这样的枚举类型定义一个class类型，然后，每个常量都是class的一个唯一实例。Python提供了Enum类来实现这个功能：
+
+	```
+		from enum import Enum
+
+		Month = Enum('Month', ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'))
+	```
+
+* 这样我们就获得了Month类型的枚举类，可以直接使用Month.Jan来引用一个常量，或者枚举它的所有成员：
+
+	```
+		for name, member in Month.__members__.items():
+			print(name, '=>', member, ',', member.value)
+	```
+
+* value属性则是自动赋给成员的int常量，默认从1开始计数。
+
+* 如果需要更精确地控制枚举类型，可以从Enum派生出自定义类：
+
+	```
+		from enum import Enum, unique
+
+		@unique
+		class Weekday(Enum):
+			Sun = 0 # Sun的value被设定为0
+			Mon = 1
+			Tue = 2
+			Wed = 3
+			Thu = 4
+			Fri = 5
+			Sat = 6
+	```
 
 ## 使用元类
+
+* python允许在程序运行的时候动态的创建类
+
+* 我们说class的定义是运行时动态创建的，而创建class的方法就是使用type()函数。
+
+* type()函数既可以返回一个对象的类型，又可以创建出新的类型，比如，我们可以通过type()函数创建出Hello类，而无需通过class Hello(object)...的定义：
+
+	```
+		>>> def fn(self, name='world'): # 先定义函数
+		...     print('Hello, %s.' % name)
+		...
+		>>> Hello = type('Hello', (object,), dict(hello=fn)) # 创建Hello class
+		>>> h = Hello()
+		>>> h.hello()
+		Hello, world.
+		>>> print(type(Hello))
+		<class 'type'>
+		>>> print(type(h))
+		<class '__main__.Hello'>
+	```
+
+* 要创建一个class对象，type()函数依次传入3个参数：
+
+1. class的名称；
+2. 继承的父类集合，注意Python支持多重继承，如果只有一个父类，别忘了tuple的单元素写法；
+3. class的方法名称与函数绑定，这里我们把函数fn绑定到方法名hello上。
+
+* 通过type()函数创建的类和直接写class是完全一样的，因为Python解释器遇到class定义时，仅仅是扫描一下class定义的语法，然后调用type()函数创建出class。
+
+* 正常情况下，我们都用class Xxx...来定义类，但是，type()函数也允许我们动态创建出类来，也就是说，动态语言本身支持运行期动态创建类，这和静态语言有非常大的不同，要在静态语言运行期创建类，必须构造源代码字符串再调用编译器，或者借助一些工具生成字节码实现，本质上都是动态编译，会非常复杂。
+
+* 除了使用type()动态创建类以外，要控制类的创建行为，还可以使用metaclass。这里就不多解释了，基本用不到。
 
 
