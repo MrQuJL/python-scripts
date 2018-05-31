@@ -158,6 +158,8 @@
 
 ## base64
 
+* 一个用于加密的工具类
+
 ## struct
 
 ## hashlib
