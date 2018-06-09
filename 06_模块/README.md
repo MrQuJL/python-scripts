@@ -36,20 +36,20 @@ mycompany
 
 * 一个标准的模块头如下：
 
-	```
-		#!/usr/bin/env python3
-		# -*- coding: utf-8 -*-
+    ```
+    #!/usr/bin/env python3
+    # -*- coding: utf-8 -*-
 
-		' a test module '
+    ' a test module '
 
-		__author__ = 'Michael Liao'
+    __author__ = 'Michael Liao'
 
-		def test():
-			pass
-		...
-		if __name__=='__main__':
-			test()
-	```
+    def test():
+        pass
+    ...
+    if __name__=='__main__':
+        test()
+    ```
 
 * 第1行和第2行是标准注释，第1行注释可以让这个hello.py文件直接在Unix/Linux/Mac上运行，第2行注释表示.py文件本身使用标准UTF-8编码；
 
@@ -67,41 +67,41 @@ mycompany
 
 * 最后，注意到这两行代码：
 
-	```
-		if __name__=='__main__':
-			test()
-	```
+    ```
+    if __name__=='__main__':
+        test()
+    ```
 
 * 当我们在命令行运行hello模块文件时，Python解释器把一个特殊变量__name__置为__main__，而如果在其他地方导入该hello模块时，if判断将失败，因此，这种if测试可以让一个模块通过命令行运行时执行一些额外的代码，最常见的就是运行测试。
 
 * 我们可以用命令行运行hello.py看看效果：
 
-	```
-		$ python3 hello.py
-		Hello, world!
-		$ python hello.py MrQuJL
-		Hello, MrQuJL!
-	```
+    ```
+    $ python3 hello.py
+    Hello, world!
+    $ python hello.py MrQuJL
+    Hello, MrQuJL!
+    ```
 
 * 如果启动Python交互环境，再导入hello模块：
 
-	```
-		$ python3
-		Python 3.4.3 (v3.4.3:9b73f1c3e601, Feb 23 2015, 02:52:03) 
-		[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
-		Type "help", "copyright", "credits" or "license" for more information.
-		>>> import hello
-		>>>
-	```
+    ```
+    $ python3
+    Python 3.4.3 (v3.4.3:9b73f1c3e601, Feb 23 2015, 02:52:03) 
+    [GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> import hello
+    >>>
+    ```
 
 * 导入时，没有打印Hello, word!，因为没有执行test()函数。
 
 * 调用hello.test()时，才能打印出Hello, word!：
 
-	```
-		>>> hello.test()
-		Hello, world!
-	```
+    ```
+    >>> hello.test()
+    Hello, world!
+    ```
 
 ## 作用域
 
@@ -113,19 +113,19 @@ mycompany
 
 * private函数或变量不应该被别人引用，那它们有什么用呢？请看例子：
 
-	```
-		def _private_1(name):
-			return 'Hello, %s' % name
+    ```
+    def _private_1(name):
+        return 'Hello, %s' % name
 
-		def _private_2(name):
-			return 'Hi, %s' % name
+    def _private_2(name):
+        return 'Hi, %s' % name
 
-		def greeting(name):
-			if len(name) > 3:
-				return _private_1(name)
-			else:
-				return _private_2(name)
-	```
+    def greeting(name):
+        if len(name) > 3:
+            return _private_1(name)
+        else:
+            return _private_2(name)
+    ```
 
 * 我们在模块里公开greeting()函数，而把内部逻辑用private函数隐藏起来了，这样，调用greeting()函数不用关心内部的private函数细节，这也是一种非常有用的代码封装和抽象的方法，即：
 
@@ -139,9 +139,9 @@ mycompany
 
 * 一般来说，第三方库都会在Python官方的pypi.python.org网站注册，要安装一个第三方库，必须先知道该库的名称，可以在官网或者pypi上搜索，比如Pillow的名称叫Pillow，因此，安装Pillow的命令就是：
 
-	```
-		pip install Pillow
-	```
+    ```
+    pip install Pillow
+    ```
 
 * 耐心等待下载并安装后，就可以使用Pillow了。
 
@@ -149,29 +149,29 @@ mycompany
 
 * 当我们试图加载一个模块时，Python会在指定的路径下搜索对应的.py文件，如果找不到，就会报错：
 
-	```
-		>>> import mymodule
-		Traceback (most recent call last):
-		  File "<stdin>", line 1, in <module>
-		ImportError: No module named mymodule
-	```
+    ```
+    >>> import mymodule
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    ImportError: No module named mymodule
+    ```
 
 * 默认情况下，Python解释器会搜索当前目录、所有已安装的内置模块和第三方模块，搜索路径存放在sys模块的path变量中：
 
-	```
-		>>> import sys
-		>>> sys.path
-		['', '/Library/Frameworks/Python.framework/Versions/3.6/lib/python36.zip', '/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6', ..., '/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages']
-	```
+    ```
+    >>> import sys
+    >>> sys.path
+    ['', '/Library/Frameworks/Python.framework/Versions/3.6/lib/python36.zip', '/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6', ..., '/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages']
+    ```
 
 * 如果我们要添加自己的搜索目录，有两种方法：
 
 * 一是直接修改sys.path，添加要搜索的目录：
 
-	```
-		>>> import sys
-		>>> sys.path.append('/Users/michael/my_py_scripts')
-	```
+    ```
+    >>> import sys
+    >>> sys.path.append('/Users/michael/my_py_scripts')
+    ```
 
 * 这种方法是在运行时修改，运行结束后失效.
 
